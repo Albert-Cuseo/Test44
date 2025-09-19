@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RNP • Mini Dashboard (Public Demo)</title>
+  <style>
+    :root { --bg:#ffffff; --text:#1f2937; --card:#f3f4f6; --border:#e5e7eb; --brand:#005A9E; }
+    .dark { --bg:#0b1220; --text:#e6edf7; --card:#0f1b31; --border:#273044; --brand:#64b5ff; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background:var(--bg); color:var(--text); }
+    header { max-width:1000px; margin:24px auto 8px; padding:0 16px; display:flex; align-items:center; justify-content:space-between; }
+    h1 { margin:0; font-size:24px; color:var(--brand); }
+    .sub { margin:4px 0 0; color:#6b7280; font-size:14px; }
+    .grid { max-width:1000px; margin:16px auto; padding:0 16px; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:14px; }
+    .tile { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; font-weight:600; }
+    .footer { max-width:1000px; margin:18px auto 32px; padding:0 16px; font-size:12px; color:#6b7280; text-align:center; }
+    button.toggle { border:1px solid var(--border); background:var(--card); color:var(--text); padding:8px 12px; border-radius:8px; cursor:pointer; }
+    button.toggle:focus { outline:2px solid var(--brand); outline-offset:2px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>RNP • Mini Dashboard</h1>
+      <p class="sub">Public test on Azure Static Web Apps</p>
+    </div>
+    <button class="toggle" id="modeBtn" aria-pressed="false" title="Toggle dark mode">🌙 Dark</button>
+  </header>
+
+  <main class="grid" aria-label="Quick links">
+    <div class="tile">✅ Intake</div>
+    <div class="tile">💳 Billing</div>
+    <div class="tile">📅 Scheduling</div>
+    <div class="tile">🛡️ Compliance</div>
+  </main>
+
+  <div class="footer">v0.1 • no build • single file</div>
+
+  <script>
+    // simple dark-mode toggle (persists)
+    const btn = document.getElementById('modeBtn');
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') document.documentElement.classList.add('dark');
+    function sync() {
+      const dark = document.documentElement.classList.contains('dark');
+      btn.textContent = dark ? '☀️ Light' : '🌙 Dark';
+      btn.setAttribute('aria-pressed', dark);
+    }
+    sync();
+    btn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme',
+        document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      sync();
+    });
+  </script>
+</body>
+</html>
